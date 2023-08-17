@@ -32,7 +32,13 @@ BASE_APPS = [
 LOCAL_APPS = [
     'apps.users',
     'apps.categories',
-    'apps.videos'
+    'apps.videos',
+    'apps.novelties',
+    'apps.Notifications',
+    'apps.Discussion',
+    'apps.Comment',
+    'apps.CollaborationQuestions',
+    'apps.CollaborationAnswer',
     
 ]
 

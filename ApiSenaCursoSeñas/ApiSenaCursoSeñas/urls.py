@@ -29,6 +29,10 @@ urlpatterns = [
     path('', include('apps.users.api.routers')), 
     path('', include('apps.categories.api.routers')),
     path('', include('apps.videos.api.routers')),
+    path('', include('apps.novelties.api.routers')),
+    path('', include('apps.Discussion.api.routers')),
+    path('', include('apps.Comment.api.routers')),
+    path('', include('apps.CollaborationQuestions.api.routers')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
