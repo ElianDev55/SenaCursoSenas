@@ -1,42 +1,42 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 
+from django.db import models
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+
 class Role(models.Model):
     name = models.CharField(max_length=10)
     state = models.BooleanField()
 
     def __str__(self):
         return self.name
+    
+
 
 class UserManager(BaseUserManager):
-    def _create_user(self, idnumber, mail, name, surname, password, **extra_fields):
+
+    def create_user(self, idnumber, mail, password=None, **extra_fields):
         if not idnumber:
-            raise ValueError("El campo 'idnumber' debe ser establecido.")
+            raise ValueError('El número de identificación es obligatorio')
         if not mail:
-            raise ValueError("El campo 'mail' debe ser establecido.")
-        
-        user = self.model(
-            idnumber=idnumber,
-            mail=mail,
-            name=name,
-            surname=surname,
-            **extra_fields
-        )
+            raise ValueError('El correo es obligatorio')
+        user = self.model(idnumber=idnumber, mail=mail, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_user(self, idnumber, mail, name, surname, password=None, **extra_fields):
-        return self._create_user(idnumber, mail, name, surname, password, **extra_fields)
+    def create_superuser(self, idnumber, mail, password=None, **extra_fields):
+        # Obtener o crear la instancia de Role para superusuarios
+        admin_role, created = Role.objects.get_or_create(name='Admin', state=True)
 
-    def create_superuser(self, idnumber, mail, name, surname, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser debe tener is_superuser=True.')
-        
-        return self._create_user(idnumber, mail, name, surname, password, **extra_fields)
+        if not isinstance(admin_role, Role):
+            raise ValueError('El rol del superusuario no es válido.')
+
+        extra_fields['role'] = admin_role
+
+        return self.create_user(idnumber, mail, password, **extra_fields)
+
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     idnumber = models.CharField(primary_key=True, max_length=40)
@@ -50,13 +50,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=40)
     mail = models.EmailField()
     telephone_number = models.CharField(max_length=15)
-    state = models.BooleanField(default = True)
+    state = models.BooleanField(default=True) 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
-    
+    role = models.ForeignKey(Role, on_delete=models.CASCADE, default=1)
+
     USERNAME_FIELD = 'idnumber'
-    REQUIRED_FIELDS = ['mail', 'name', 'surname', 'age', 'birth_day', 'gender', 'type_id', 'disability', 'telephone_number', 'state', 'role']
+    REQUIRED_FIELDS = ['mail', 'name', 'surname', 'age', 'birth_day', 'gender', 'type_id', 'disability', 'telephone_number']
 
     objects = UserManager()
 
