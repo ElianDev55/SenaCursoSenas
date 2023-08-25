@@ -5,7 +5,7 @@ import './index.css'
 // import App from './App.jsx'
 import Home from './routes/Home.jsx'
 import Categories from './routes/Categories.jsx'
-import Contact from './routes/Contact.jsx'
+import Forum from './routes/Forum.jsx'
 import Error from './routes/Error.jsx'
 
 
@@ -20,8 +20,8 @@ const router = createBrowserRouter([
     element: <Categories/>,
   },
   {
-    path: '/contact',
-    element: <Contact/>,
+    path: '/forum',
+    element: <Forum/>,
   },
 ]);
 

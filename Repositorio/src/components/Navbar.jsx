@@ -15,7 +15,7 @@ const Navbar = () => {
                 <Link to={"/categories"}>Categories</Link>
             </li>
             <li className='font-sans font-normal cursor-pointer  text-[18px] text-white  px-4 '>
-                <Link to={"/contact"}>Contact</Link>
+                <Link to={"/forum"}>Forum</Link>
             </li>
         </ul>
         <div className='flex justify-content-between cursor-pointer justify-items-end navbar '>
