@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import VideoCard from './VideoCard';
 
-function Hero() {
+function searchC() {
   const [searchQuery, setSearchQuery] = useState('');
   const [videos, setVideos] = useState([]);
   const [videoToShow, setVideoToShow] = useState(null);
@@ -51,7 +51,4 @@ function Hero() {
   );
 }
 
-export default Hero;
-
-
-
+export default searchC;

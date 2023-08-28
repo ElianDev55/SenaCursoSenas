@@ -1,11 +1,14 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
+import ForumView from '../components/ForumView'
 
 const Forum = () => {
     return (
     <div>
         <Navbar/>
-        <h1>Forum</h1>
+        
+        <ForumView/>
+
     </div>
     )
 }

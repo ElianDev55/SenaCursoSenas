@@ -1,14 +1,13 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
-import TestCard from '../components/TestCard'
+
 
 const Home = () => {
     return (
-    <div className='bg-tierra h-[716px]' >
+    <div className='bg-tierra h-[2500px]' >
         <Navbar/>
-        <Hero/>
-        <TestCard/>
+        <Hero/> 
     </div>
     )
 }

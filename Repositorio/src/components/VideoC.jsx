@@ -5,7 +5,7 @@ return (
     <div className='container bg-30 w-[150px] h[300px]'>
 
     <div className='title'>
-        <h2>{video.title}</h2>
+        <h2 className='text-white'>{video.title}</h2>
     </div>
 
     <div className='p-6'>

@@ -1,13 +1,15 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
-import VideoSearch from '../components/VideoSearch'
+import Hero from '../components/Hero'
+// import SearchC from '../components/searchC'
+import SearchComponent from '../components/SearchComponent'
 
 const Categories = () => {
     return (
     <div>
         <Navbar/>
-        <h1>Categorias</h1>
-        <VideoSearch/>
+        <Hero/>
+        <SearchComponent/>
     </div>
     )
 }

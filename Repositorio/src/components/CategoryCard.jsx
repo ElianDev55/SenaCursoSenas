@@ -1,14 +1,15 @@
-import React from 'react'
+// CategoryCard.js
+import React from 'react';
 import {
-    Card,
-    CardActionArea,
-    CardContent,
-    CardMedia,
-    } from "@mui/material";
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+} from "@mui/material";
 
-const VideoCard = ({video}) => {
-    return (
-        <Card
+const CategoryCard = ({ category }) => {
+  return (
+    <Card
       className="w-[400px] ml-[8%] mt-[5%] "
       sx={{
         transition: "0.2s",
@@ -20,22 +21,17 @@ const VideoCard = ({video}) => {
       <CardActionArea>
         <CardMedia
           component="img"
-          image={video.miniature}
-          height="200"
+          image={category.miniature}
+          height="300"
           alt="Card Image"
         />
         <CardContent>
-          <h1>{video.title}</h1>
-          <p>
-            {video.description}
-          </p>
+          <h1>{category.title}</h1>
+          <p>{category.descripcion}</p>
         </CardContent>
       </CardActionArea>
     </Card>
-    )
-}
+  );
+};
 
-
-
-
-export default VideoCard
+export default CategoryCard;
