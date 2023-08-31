@@ -14,32 +14,26 @@ class Role(models.Model):
 
 
 class UserManager(BaseUserManager):
-
-    def create_user(self, idnumber, mail, password=None, **extra_fields):
-        if not idnumber:
-            raise ValueError('El número de identificación es obligatorio')
-        if not mail:
-            raise ValueError('El correo es obligatorio')
-        user = self.model(idnumber=idnumber, mail=mail, **extra_fields)
+    def _create_user(self, username, mail,  password, **extra_fields):
+        user = self.model(
+            username = username,
+            mail = mail,            
+            **extra_fields
+        )
         user.set_password(password)
-        user.save(using=self._db)
+        user.save(using=self.db)
         return user
 
-    def create_superuser(self, idnumber, mail, password=None, **extra_fields):
-        # Obtener o crear la instancia de Role para superusuarios
-        admin_role, created = Role.objects.get_or_create(name='Admin', state=True)
+    def create_user(self, username, mail,  password=None, **extra_fields):
+        return self._create_user(username, mail,  password, **extra_fields)
 
-        if not isinstance(admin_role, Role):
-            raise ValueError('El rol del superusuario no es válido.')
-
-        extra_fields['role'] = admin_role
-
-        return self.create_user(idnumber, mail, password, **extra_fields)
+    def create_superuser(self, username, mail,  password=None, **extra_fields):
+        return self._create_user(username, mail,  password, **extra_fields)
 
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    idnumber = models.CharField(primary_key=True, max_length=40)
+    username = models.CharField(primary_key=True, max_length=40)
     name = models.CharField(max_length=40)
     surname = models.CharField(max_length=40)
     age = models.IntegerField()
@@ -47,7 +41,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     gender = models.CharField(max_length=10)
     type_id = models.CharField(max_length=20)
     disability = models.BooleanField()
-    password = models.CharField(max_length=40)
     mail = models.EmailField()
     telephone_number = models.CharField(max_length=15)
     state = models.BooleanField(default=True) 
@@ -55,7 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     updated_at = models.DateTimeField(auto_now=True)
     role = models.ForeignKey(Role, on_delete=models.CASCADE, default=1)
 
-    USERNAME_FIELD = 'idnumber'
+    USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['mail', 'name', 'surname', 'age', 'birth_day', 'gender', 'type_id', 'disability', 'telephone_number']
 
     objects = UserManager()

@@ -44,6 +44,7 @@ LOCAL_APPS = [
 
 THIRD_APPS = [
     'rest_framework',
+    'rest_framework.authtoken',
     "corsheaders",
     'drf_yasg',
     'django.forms',
