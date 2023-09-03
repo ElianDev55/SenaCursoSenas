@@ -8,7 +8,7 @@ class Video(models.Model):
     video = models.FileField(upload_to='videos/')  # Aquí se guarda el video
     title = models.CharField(max_length=20)
     description = models.CharField(max_length=240)
-    state = models.BooleanField(default=True)
+    state = models.BooleanField(default=True) 
     miniature = models.ImageField(upload_to='miniatures/')  # Aquí se guarda la imagen
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
