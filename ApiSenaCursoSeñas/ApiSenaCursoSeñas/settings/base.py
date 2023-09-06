@@ -122,18 +122,15 @@ USE_TZ = True
 AUTH_USER_MODEL = 'users.User'
 
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:5500',
-    "http://localhost:8080",
-    "http://localhost:3000",
-    "http://127.0.0.1:9000",
+    'http://localhost:5173',
 ]
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^https://\w+\.localhost:5500$",
+    r"^https://\w+\.localhost:5173$",
 ]
 
 CORS_ORIGIN_BY_WHITELIST = [
-    "http://localhost:5500",
+    "http://localhost:5173",
     
 ]
 
