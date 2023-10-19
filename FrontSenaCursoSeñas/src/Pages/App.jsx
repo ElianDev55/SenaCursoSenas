@@ -1,19 +1,16 @@
-import { Cards } from '../Components/Cards';
-import DetailCategory from '../Components/DetailCategory';
-import { LayoutCards } from '../Components/LayoutCards';
-import { LayoutDetailCard } from '../Components/LayoutDetailCard';
-import { ModalVideos } from '../Components/ModalVideos';
-import { Search } from '../Components/Search';
 
 
-
+import { AllInfo } from './AllInfo';
 import '../Styles/App.css'
+import { CategoryOfVideos } from './CategoryOfVideos';
 
 export const App =  () => {
   
   return (
     <>
-    <ModalVideos />
+    
+    <CategoryOfVideos />
+    
     </>
   )
 }

@@ -2,12 +2,12 @@
 import {Card, CardBody, Image} from "@nextui-org/react";
 
 
-export default function DetailCategory() {
+export function DetailCategory() {
   
   return (
         <Card
         isBlurred
-        className="border-none bg-background/60 dark:bg-default-100/50 max-w-[610px]"
+        className=" box border-none bg-background/60 dark:bg-default-100/50 max-w-[610px]"
         shadow="sm"
         >
         <CardBody>
