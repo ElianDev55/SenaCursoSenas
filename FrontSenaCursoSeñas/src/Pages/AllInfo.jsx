@@ -31,7 +31,6 @@ export const AllInfo = () => {
         }
         </LayoutCards>
     </div>
-    {counter++}
         </div>
         
     )

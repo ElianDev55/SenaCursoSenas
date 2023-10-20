@@ -5,29 +5,24 @@ import '../Styles/App.css'
 import { CategoryOfVideos } from './CategoryOfVideos';
 import { Footer } from '../Components/Footer';
 import { ModalVideos } from '../Components/ModalVideos';
-<<<<<<< HEAD
+
 import { ContextVideosProvider } from '../Context/ContextVideos';
-=======
->>>>>>> 96d8a4ac19756268148383210f01eff4440fb0d4
+import { Foro } from './Foro';
+
 
 
 export const App =  () => {
   
   return (
     <>
-<<<<<<< HEAD
-    <ContextVideosProvider>
 
-    <ModalVideos/>
-    <CategoryOfVideos/>
+    <ContextVideosProvider>
+      <ModalVideos />
+      <Foro />
     <Footer/>
     
     </ContextVideosProvider>
-=======
-    <ModalVideos/>
-    <CategoryOfVideos/>
-    <Footer/>
->>>>>>> 96d8a4ac19756268148383210f01eff4440fb0d4
+
     
     </>
   )

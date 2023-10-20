@@ -1,9 +1,15 @@
 
 import {Card, CardBody, CardFooter, Image, CardHeader} from "@nextui-org/react";
-
+import { ModalVideos } from "./ModalVideos";
+import { useContext } from "react";
+import { ContextVideos } from "../Context/ContextVideos";
 
 export const Cards =  (data) => {
   
+  const context = useContext(ContextVideos);
+  
+ 
+
   return (
    
       
@@ -11,7 +17,7 @@ export const Cards =  (data) => {
     shadow="sm"
     className="max-w-[250px] mx-auto"
     isPressable
-    onPress={() => console.log("item pressed")}
+    onClick={() => {  context.OpenModalVideos(); context.GetInfoVideo(data.data) } }
   >
     <CardHeader className="pb-0 pt-5 px-4 flex-col items-start intem justify-center align-center">
       <h4 className="font-bold text-large">{data.data.title}</h4>

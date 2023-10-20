@@ -12,7 +12,7 @@ export const  CategoryOfVideos =  () => {
     const [items, setItems] = useState(null)
     let counter = 0;
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/categoryvideos/1/')
+        fetch('http://127.0.0.1:8000/categoryvideos/3/')
         .then(response => response.json())
         .then(data => setItems(data))
     }, [])

@@ -2,22 +2,21 @@ import React from "react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import {AiFillEye} from "react-icons/ai";
 import '../Styles/ModalVideos.css'
+import { useContext } from "react";
+import { ContextVideos } from "../Context/ContextVideos";
 
 export function ModalVideos() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [backdrop, setBackdrop] = React.useState('opaque');
+
+
+const context = useContext(ContextVideos);
+
   const [size, setSize] = React.useState('md')
 
 
   const backdrops = "blur";
   const sizes = "5xl";
 
-  const handleOpen = (backdrop,size) => {
-    setBackdrop(backdrop);
-    setSize(size)
-    console.log(size);
-    onOpen();
-  };
+  context.handleOpen(backdrops,sizes);
  
  
 
@@ -25,27 +24,15 @@ export function ModalVideos() {
     <>
       <div className="flex flex-wrap gap-3">
        
-          <Button
-          
-            key={backdrops}
-            variant="flat"
-            color="primary"
-            variant="shadow"
-            onClick={() => handleOpen(backdrops,sizes)}
-            
-            className="capitalize"
-          >
-            <AiFillEye />
-          </Button>
         
       </div>
       <Modal
-      size={size} 
+      size={context.size} 
         className="mx-auto"
         placement="center"
-        backdrop={backdrop}
-        isOpen={isOpen}
-        onClose={onClose}
+        backdrop={context.backdrop}
+        isOpen={context.isOpenVideoModal}
+        onClose={() => context.CloseModalVideos()}
         classNames={{
           body: "py-6",
           backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
@@ -58,10 +45,10 @@ export function ModalVideos() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Pop</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">{context.infoVideo.title}</ModalHeader>
               <ModalBody>
                 <video
-                  src="https://media.istockphoto.com/id/1371228411/es/v%C3%ADdeo/lapso-de-tiempo-de-la-noche-de-kabukicho-con-multitud-caminando-por-la-calle-en-la-ciudad-de.mp4?s=mp4-640x640-is&k=20&c=ZqSSHwj5JBAfo192hwy79b5eZl7AGGoXlqRwK1nFB5o="
+                  src={context.infoVideo.video}
                   controls
                   width="100%"
                   height="100%"
