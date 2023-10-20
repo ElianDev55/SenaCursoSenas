@@ -34,7 +34,7 @@ export function Search() {
   placeholder="Buscar Video..."
   startContent={
     <BiSearchAlt
-      className="text-green-500 text-slate-400 pointer-events-none flex-shrink-0 text-4xl"
+      className="text-green-700 text-slate-400 pointer-events-none flex-shrink-0 text-4xl"
       size={25}
     />
   }

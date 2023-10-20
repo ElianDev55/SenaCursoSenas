@@ -1,9 +1,20 @@
-
+import {useState, useEffect} from "react";
 import {Card, CardBody, Image} from "@nextui-org/react";
 
 
-export function DetailCategory() {
+export function DetailCategory(data) {
   
+
+    const [items, setItems] = useState(null)
+    
+    const categoryId = data.data.idCategory
+
+    useEffect(() => {
+        fetch(`http://127.0.0.1:8000/categories/${categoryId}/`)
+        .then(response => response.json())
+        .then(data => setItems(data))
+    }, [])
+
   return (
         <Card
         isBlurred
@@ -19,7 +30,7 @@ export function DetailCategory() {
                 className="object-cover"
                 height={200}
                 shadow="md"
-                src="https://art.ngfiles.com/images/746000/746873_xxdrummerxx_miles-morales.jpg?f1545251285"
+                src={items ? items.miniature : "https://cdn.vox-cdn.com/thumbor/BurYtvTdu3WviUU9pWwlyrZxkqc=/0x0:1496x727/1820x1024/filters:focal(747x258:985x496):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/63096914/Screen_Shot_2019_02_12_at_4.38.43_PM.0.png"}
                 width="100%"
                 />
             </div>
@@ -28,12 +39,9 @@ export function DetailCategory() {
                 <div className="flex justify-between items-start">
                 <div className="flex flex-col gap-0">
                     <h3 className="font-semibold text-foreground/90">Categoria</h3>
-                    <p className="text-small text-foreground/80">Pop</p>
+                    <p className="text-small text-foreground/80">{items ? items.title : "Cargando..."}</p>
                     <h1 className="text-large font-medium mt-2">Descripcion</h1>
-                    <p className="text-small text-foreground/80">pop, acort. de popular popular. 
-                    1. m. Estilo musical de origen angloamericano nacido al final de los años cincuenta del siglo XX, 
-                    caracterizado por la creación de canciones de ritmo marcado acompañadas de instrumentos
-                    eléctricos y batería, y que busca lograr una gran difusión comercial.</p>
+                    <p className="text-small text-foreground/80">{items ? items.descripcion : "Cargando..."}.</p>
                 </div>
                 
                 </div>
