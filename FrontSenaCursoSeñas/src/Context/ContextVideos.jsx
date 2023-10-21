@@ -41,6 +41,28 @@ export const ContextVideosProvider = ({children}) => {
     // -----------------------------
 
 
+    // what do i render , comments or videos
+
+    const [render, setRender] = useState('videos');
+
+    const  changetoVideos = () => {
+        setRender('videos');
+    }
+
+    const  changetoComments = () => {
+        setRender('comments');
+        
+    }
+
+    // Get info discussion
+
+    const [infoDiscussion, setInfoDiscussion] = useState({});
+
+    const GetInfoDiscussion = (data) => {
+        setInfoDiscussion(data);
+    }
+
+
 
     return (
         <ContextVideos.Provider value={{
@@ -52,6 +74,11 @@ export const ContextVideosProvider = ({children}) => {
             handleOpen,
             backdrop,
             size,
+            render,
+            changetoVideos,
+            changetoComments,
+            infoDiscussion,
+            GetInfoDiscussion
         }}>
             {children}
         </ContextVideos.Provider>

@@ -17,7 +17,7 @@ export const Cards =  (data) => {
     shadow="sm"
     className="max-w-[250px] mx-auto"
     isPressable
-    onClick={() => {  context.OpenModalVideos(); context.GetInfoVideo(data.data) } }
+    onClick={() => {  context.OpenModalVideos(); context.GetInfoVideo(data.data); context.changetoVideos()   } }
   >
     <CardHeader className="pb-0 pt-5 px-4 flex-col items-start intem justify-center align-center">
       <h4 className="font-bold text-large">{data.data.title}</h4>

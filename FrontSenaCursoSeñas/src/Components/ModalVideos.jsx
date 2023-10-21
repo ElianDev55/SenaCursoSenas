@@ -1,16 +1,15 @@
-import React from "react";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
-import {AiFillEye} from "react-icons/ai";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button} from "@nextui-org/react";
 import '../Styles/ModalVideos.css'
 import { useContext } from "react";
 import { ContextVideos } from "../Context/ContextVideos";
+import { ForoQuestions } from "./Foroquestions";
+import { LayoutForo } from "./LayoutForo";
 
 export function ModalVideos() {
 
 
 const context = useContext(ContextVideos);
 
-  const [size, setSize] = React.useState('md')
 
 
   const backdrops = "blur";
@@ -18,7 +17,26 @@ const context = useContext(ContextVideos);
 
   context.handleOpen(backdrops,sizes);
  
- 
+ const items = [
+  {
+
+  },
+  {
+    
+  },
+  {
+    
+  },
+  {
+    
+  },
+  {
+    
+  },
+  {
+    
+  },
+ ]
 
   return (
     <>
@@ -47,13 +65,26 @@ const context = useContext(ContextVideos);
             <>
               <ModalHeader className="flex flex-col gap-1">{context.infoVideo.title}</ModalHeader>
               <ModalBody>
+              {context.render == "videos" ? (
                 <video
-                  src={context.infoVideo.video}
-                  controls
-                  width="100%"
-                  height="100%"
+                src={context.infoVideo.video}
+                controls
+                width="100%"
+                height="100%"
                 />
-              </ModalBody>
+                ) : (
+                  
+                  <div className="mt-10">
+                    {
+                    items?.map(item => (
+                    <ForoQuestions data={context.infoDiscussion} />
+                    ))
+                    }
+
+
+                    </div>
+                  )}
+                  </ModalBody>
               <ModalFooter>
                 <Button
                   color="danger"

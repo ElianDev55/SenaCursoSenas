@@ -44,7 +44,7 @@ export const Foro = () => {
                 </Card>
                 {
         items?.map(item => (
-            < ForoQuestions   key={counter++} data={item} />
+            < ForoQuestions   key={counter++} data={item}  />
         ))
         }
         </LayoutForo>
