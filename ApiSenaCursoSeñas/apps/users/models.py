@@ -39,6 +39,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     age = models.IntegerField()
     birth_day = models.DateField()
     gender = models.CharField(max_length=10)
+    avatar = models.ImageField(default='https://www.sena.edu.co/Style%20Library/alayout/images/logoSena.png')
     type_id = models.CharField(max_length=20)
     disability = models.BooleanField()
     mail = models.EmailField()
@@ -47,7 +48,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     role = models.ForeignKey(Role, on_delete=models.CASCADE, default=1)
-
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['mail', 'name', 'surname', 'age', 'birth_day', 'gender', 'type_id', 'disability', 'telephone_number']
 
