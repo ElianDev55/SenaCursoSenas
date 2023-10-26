@@ -1,42 +1,21 @@
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button} from "@nextui-org/react";
+import { useContext} from "react";
+import { ModalContext } from "../Context/ContextModal";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
+import {AiFillEye} from "react-icons/ai";
 import '../Styles/ModalVideos.css'
-import { useContext } from "react";
-import { ContextVideos } from "../Context/ContextVideos";
-import { ForoQuestions } from "./Foroquestions";
-import { LayoutForo } from "./LayoutForo";
 
 export function ModalVideos() {
 
 
-const context = useContext(ContextVideos);
-
+  const context = useContext(ModalContext);
 
 
   const backdrops = "blur";
   const sizes = "5xl";
 
   context.handleOpen(backdrops,sizes);
+  
  
- const items = [
-  {
-
-  },
-  {
-    
-  },
-  {
-    
-  },
-  {
-    
-  },
-  {
-    
-  },
-  {
-    
-  },
- ]
 
   return (
     <>
@@ -75,13 +54,7 @@ const context = useContext(ContextVideos);
                 ) : (
                   
                   <div className="mt-10">
-                    {
-                    items?.map(item => (
-                    <ForoQuestions data={context.infoDiscussion} />
-                    ))
-                    }
-
-
+                    a
                     </div>
                   )}
                   </ModalBody>

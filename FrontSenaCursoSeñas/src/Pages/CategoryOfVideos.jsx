@@ -4,18 +4,20 @@ import { LayoutDetailCard } from "../Components/LayoutDetailCard"
 import { Search } from '../Components/Search';
 import { Cards } from '../Components/Cards';
 import { LayoutCards } from '../Components/LayoutCards';
+import { DetailCategoryContext } from "../Context/ContextDetailCard";
+import { useContext } from "react";
 import '../styles/CategoryOfVideos.css'
 
 
 export const  CategoryOfVideos =  () => {
     
-    const [items, setItems] = useState(null)
-    let counter = 0;
-    useEffect(() => {
-        fetch('http://127.0.0.1:8000/categoryvideos/3/')
-        .then(response => response.json())
-        .then(data => setItems(data))
-    }, [])
+
+
+    
+    const videosOfCategory= useContext(DetailCategoryContext)
+    
+
+    
 
     return(
         <div>
@@ -23,8 +25,8 @@ export const  CategoryOfVideos =  () => {
         <div className="box">
             <LayoutDetailCard>
             {
-        items?.map(item => (
-            <DetailCategory key={counter} data={item} />
+        videosOfCategory.videosOfCategory?.map(item => (
+            <DetailCategory key={item.idvideo} data={item} />
         ))
         }
             </LayoutDetailCard>
@@ -38,8 +40,8 @@ export const  CategoryOfVideos =  () => {
         <div className="flex justify-center items-center w-full max-w-500 mx-auto">
         <LayoutCards>
         {
-        items?.map(item => (
-            <Cards key={counter++} data={item} />
+        videosOfCategory.videosOfCategory?.map(item => (
+            <Cards key={item.idvideo} data={item} />
         ))
         }
         </LayoutCards>

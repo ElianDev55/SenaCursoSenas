@@ -3,11 +3,13 @@ import {Card, CardHeader, CardBody, CardFooter, Avatar} from "@nextui-org/react"
 import {BiMessageSquareDetail} from "react-icons/bi";
 import { useState, useEffect } from 'react';
 import { useContext } from "react";
-import { ContextVideos } from "../Context/ContextVideos";
+import { UsersContext } from "../Context/ContextUser";
 
 export  function ForoQuestions(data) {
 
-  const context = useContext(ContextVideos);
+    const context = useContext(UsersContext);
+    
+
 
   const [items, setItems] = useState({
     avatar: "https://www.sena.edu.co/Style%20Library/alayout/images/logoSena.png",
@@ -20,17 +22,28 @@ export  function ForoQuestions(data) {
     }, [])
     
   return (
+    
+    
+
+    
+
     <div  
     
-    onClick={() => {context.changetoComments(); context.OpenModalVideos();  context.GetInfoDiscussion(data.data.IdDist)  }   }
+    /* onClick={() => {context.changetoComments(); context.OpenModalVideos();  context.GetInfoDiscussion(data.data.IdDist)  }   }
+ */
 
-    >
     
+    >
     
     <Card className="max-w-[540px] hover:shadow-md transition-transform transform hover:translate-y-[-5px] hover:bg-green-300 cursor-pointer">
       <CardHeader className="justify-between">
         <div className="flex gap-5">
-          <Avatar isBordered radius="full" size="md" src={items.avatar} />
+        <Avatar
+  isBordered
+  radius="full"
+  size="md"
+  src={items.avatar ? items.avatar : 'https://www.sena.edu.co/Style%20Library/alayout/images/logoSena.png'}
+/>
           
           <div className="flex flex-col gap-1 items-start justify-center">
             <h4 className="text-small font-semibold leading-none text-default-600">{items.name} </h4>

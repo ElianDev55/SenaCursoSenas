@@ -1,21 +1,19 @@
-import {useState, useEffect} from "react";
+
 import {Card, CardBody, Image} from "@nextui-org/react";
+import { useContext } from "react";
+import { DetailCategoryContext } from "../Context/ContextDetailCard";
 
-
-export function DetailCategory(data) {
+export function DetailCategory() {
   
 
-    const [items, setItems] = useState(null)
-    
-    const categoryId = data.data.idCategory
+    const detailCategory = useContext(DetailCategoryContext)
 
-    useEffect(() => {
-        fetch(`http://127.0.0.1:8000/categories/${categoryId}/`)
-        .then(response => response.json())
-        .then(data => setItems(data))
-    }, [])
+     
 
+   
   return (
+    
+    
         <Card
         isBlurred
         className=" box border-none bg-background/60 dark:bg-default-100/50 max-w-[610px]"
@@ -30,7 +28,7 @@ export function DetailCategory(data) {
                 className="object-cover"
                 height={200}
                 shadow="md"
-                src={items ? items.miniature : "https://cdn.vox-cdn.com/thumbor/BurYtvTdu3WviUU9pWwlyrZxkqc=/0x0:1496x727/1820x1024/filters:focal(747x258:985x496):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/63096914/Screen_Shot_2019_02_12_at_4.38.43_PM.0.png"}
+                src={detailCategory.detailCategory ? detailCategory.detailCategory.miniature : "https://cdn.vox-cdn.com/thumbor/BurYtvTdu3WviUU9pWwlyrZxkqc=/0x0:1496x727/1820x1024/filters:focal(747x258:985x496):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/63096914/Screen_Shot_2019_02_12_at_4.38.43_PM.0.png"}
                 width="100%"
                 />
             </div>
@@ -39,9 +37,9 @@ export function DetailCategory(data) {
                 <div className="flex justify-between items-start">
                 <div className="flex flex-col gap-0">
                     <h3 className="font-semibold text-foreground/90">Categoria</h3>
-                    <p className="text-small text-foreground/80">{items ? items.title : "Cargando..."}</p>
+                    <p className="text-small text-foreground/80">{detailCategory.detailCategory.title ? detailCategory.detailCategory.title : "Cargando..."}</p>
                     <h1 className="text-large font-medium mt-2">Descripcion</h1>
-                    <p className="text-small text-foreground/80">{items ? items.descripcion : "Cargando..."}.</p>
+                    <p className="text-small text-foreground/80">{detailCategory.detailCategory.descripcion? detailCategory.detailCategory.descripcion : "Cargando..."}.</p>
                 </div>
                 
                 </div>

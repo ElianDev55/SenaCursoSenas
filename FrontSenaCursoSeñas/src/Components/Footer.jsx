@@ -24,7 +24,7 @@ export const Footer =  () => {
       <Image
       width={300}
       alt=""
-      src="https://media.canva.com/1/image-resize/1/282_160_100_PNG_F/czM6Ly9tZWRpYS1wcml2YXRlLmNhbnZhLmNvbS9aZHo4WS9NQUZ4S0JaZHo4WS8xL3AucG5n?osig=AAAAAAAAAAAAAAAAAAAAAKh7oSgXTuuWu9pMwLWgi4CSH3iJOt1AH4BjITVQolNZ&exp=1697761702&x-canva-quality=screen&csig=AAAAAAAAAAAAAAAAAAAAAMlgak9RbxEaiS_gLabp0S-LQs-t-fRv_EZsElLMM8eX"
+      src="src/Assets/FooterSenaImage.png"
     />
     </div>
   </div>

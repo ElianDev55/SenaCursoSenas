@@ -4,17 +4,15 @@ import { LayoutForo } from '../Components/LayoutForo';
 import { Card, CardBody,Button} from '@nextui-org/react';
 import {AiFillFire} from "react-icons/ai";
 import {IoMegaphoneSharp} from "react-icons/io5";
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import { DiscussionContext } from '../Context/ContextDiscussion';
+import { UpDiscussion } from '../Components/UpDiscussion';
 
 export const Foro = () => {
 
-    const [items, setItems] = useState(null)
-    let counter = 0;
-    useEffect(() => {
-        fetch('http://127.0.0.1:8000/discussion/')
-        .then(response => response.json())
-        .then(data => setItems(data))
-    }, [])
+    const  context = useContext(DiscussionContext)
+    const {discussion} = context
+    
 
     return(
         <div className="flex justify-center items-center w-full max-w-500 mx-auto">
@@ -39,14 +37,21 @@ export const Foro = () => {
                     </p>
                     </Button>    
                 </div>
-      </div>
+                </div>
                 </CardBody>
                 </Card>
+                <UpDiscussion/>
+                
                 {
-        items?.map(item => (
-            < ForoQuestions   key={counter++} data={item}  />
-        ))
-        }
+  discussion ? (
+    discussion.map(item => (
+      <ForoQuestions  key={item.IdDist} data={item} />
+    ))
+  ) : (
+    <p>Cargando...</p>
+  )
+}
+
         </LayoutForo>
     </div>
     )

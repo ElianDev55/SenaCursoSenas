@@ -1,86 +1,72 @@
 import { createContext } from "react";
-import { useState } from "react";
-export const ContextVideos = createContext();
+import { useFetchVideos, useSendDataVideos,usePutVideo,useDeleteVideo,useSearchVideos } from "../Hooks/CrudAllvideos";
 
+const VideosContext = createContext(null);
 
-export const ContextVideosProvider = ({children}) => {
+const VideosProvider = ({ children }) => {
+  
+  //Get info api
+  const [videos] = useFetchVideos("http://127.0.0.1:8000/videos/");
+  
+  //Post info api
+  const { sent, handleSubmit } = useSendDataVideos(); 
+
+  const sendVideoData = async (data) => {
+    await handleSubmit(data);
     
+      window.location.reload();
+  
+  
+  };
 
-    //OPEN AND CLOSE MODAL
-    const [isOpenVideoModal, setIsOpenVideoModal] = useState(false); 
-    
-    const OpenModalVideos = () => {
-        setIsOpenVideoModal(true);
-    }
+  // Put info api
 
-    const CloseModalVideos = () => {
-        setIsOpenVideoModal(false);
-    }
-    // -----------------------------
+  const { updated, handleUpdate } = usePutVideo();
 
-    // Get Info Video
-    const [infoVideo, setInfoVideo] = useState({});
-    
-    const GetInfoVideo = (data) => {
-        setInfoVideo(data);
-    }
+  const updateVideoData = async (videoId, updatedData) => {
+    await handleUpdate(videoId, updatedData);
+  }
 
-    // -----------------------------
+  //Delete info api
 
-    //Change State of Modal fo size
+  const { deleted, handleDelete } = useDeleteVideo();
 
-    const [backdrop, setBackdrop] = useState('opaque');
-    const [size, setSize] = useState('md')
+  const deleteVideoData = async (videoId) => {
+    await handleDelete(videoId);
+  }
 
-    const handleOpen = (backdrop,size) => {
-        setBackdrop(backdrop);
-        setSize(size)
-        
-      };
+  // Seach info api
 
-    // -----------------------------
+  const { searchTerm, setSearchTerm, searchResults } = useSearchVideos('');
+  
+  const SeachVideoData = async (searchTerm) => {
+    await setSearchTerm(searchTerm);
+  }
+  
 
+  return (
+    <VideosContext.Provider value={{ 
+      videos, 
+      //-----
+      sendVideoData, 
+      sent, 
+      //-----
+      updateVideoData,
+      updated, 
+      //-----
+      deleteVideoData,
 
-    // what do i render , comments or videos
-
-    const [render, setRender] = useState('videos');
-
-    const  changetoVideos = () => {
-        setRender('videos');
-    }
-
-    const  changetoComments = () => {
-        setRender('comments');
-        
-    }
-
-    // Get info discussion
-
-    const [infoDiscussion, setInfoDiscussion] = useState({});
-
-    const GetInfoDiscussion = (data) => {
-        setInfoDiscussion(data);
-    }
+      searchTerm,
+      SeachVideoData,
+      searchResults,
 
 
+      
+      }}>
+      
+      {children}
+    </VideosContext.Provider>
+  );
+};
 
-    return (
-        <ContextVideos.Provider value={{
-            isOpenVideoModal,
-            OpenModalVideos,
-            CloseModalVideos,
-            GetInfoVideo,
-            infoVideo,
-            handleOpen,
-            backdrop,
-            size,
-            render,
-            changetoVideos,
-            changetoComments,
-            infoDiscussion,
-            GetInfoDiscussion
-        }}>
-            {children}
-        </ContextVideos.Provider>
-    )
-}
+export { VideosContext, VideosProvider };

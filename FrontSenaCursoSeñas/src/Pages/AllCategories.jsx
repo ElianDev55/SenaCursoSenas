@@ -1,18 +1,16 @@
-import  { useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { Search } from '../Components/Search';
-import { Cards } from '../Components/Cards';
 import { LayoutCards } from '../Components/LayoutCards';
+import {CategoriesContext} from '../Context/ContextCategories';  
 import '../styles/AllVideos.css'
+import { Cards } from '../Components/Cards';
 
-export const AllInfo = () => {
 
-    const [items, setItems] = useState(null)
-    let counter = 0;
-    useEffect(() => {
-        fetch('http://127.0.0.1:8000/videos/')
-        .then(response => response.json())
-        .then(data => setItems(data))
-    }, [])
+export const AllCategories = () => {
+
+    const context = useContext(CategoriesContext);
+    
+    const videos = context.categories;
 
     return (
         <div>
@@ -25,9 +23,13 @@ export const AllInfo = () => {
     <div className="flex justify-center items-center w-full max-w-500 mx-auto">
         <LayoutCards>
         {
-        items?.map(item => (
-            <Cards key={counter} data={item} />
-        ))
+            videos ? (
+                videos.map((video) => (
+                    <Cards key={video.idvideo} data={video} />
+                ))
+            ) : (
+                <p>No hay videos disponibles</p>
+            )
         }
         </LayoutCards>
     </div>
