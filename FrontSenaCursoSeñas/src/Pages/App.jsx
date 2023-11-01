@@ -1,13 +1,9 @@
 
-
-import { AllInfo } from './AllInfo';
+import {Videos} from './Videos'
 import '../Styles/App.css'
-import { CategoryOfVideos } from './CategoryOfVideos';
 import { Footer } from '../Components/Footer';
-import { ModalVideos } from '../Components/ModalVideos';
+import { VideosProvider } from '../Context/ContextVideos';
 
-import { ContextVideosProvider } from '../Context/ContextVideos';
-import { Foro } from './Foro';
 
 
 export const App =  () => {
@@ -15,15 +11,14 @@ export const App =  () => {
   
   return (
     <>
-    <ContextVideosProvider>
-      <ModalVideos />
-      
-   
-      <Foro />
-    <Footer/>
     
-    </ContextVideosProvider>
-
+    <VideosProvider> 
+      
+      <Videos/>
+      <Footer/>
+      
+      
+      </VideosProvider>
     
     </>
   )

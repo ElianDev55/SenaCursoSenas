@@ -25,6 +25,7 @@ export const VideosProvider = ({children}) => {
     
     const updateVideosData = async (videoId, updatedData) => {
         await handleUpdate(videoId, updatedData);
+        window.location.reload();
     }
 
 

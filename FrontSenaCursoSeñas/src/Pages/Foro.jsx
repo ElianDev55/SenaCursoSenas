@@ -1,4 +1,4 @@
-
+/* 
 import { ForoQuestions } from '../Components/Foroquestions';
 import { LayoutForo } from '../Components/LayoutForo';
 import { Card, CardBody,Button} from '@nextui-org/react';
@@ -50,4 +50,4 @@ export const Foro = () => {
         </LayoutForo>
     </div>
     )
-}
+} */

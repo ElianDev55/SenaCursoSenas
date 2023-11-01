@@ -50,7 +50,9 @@ const usePutVideos = () => {
     setUpdated(true);
 
     try {
-      await axios.put(`http://127.0.0.1:8000/videos/${videoId}`, updatedData);
+      await axios.put(`http://127.0.0.1:8000/videos/${videoId}/`, updatedData);
+      console.log(updatedData);
+
       setUpdated(false);
     } catch (error) {
       setUpdated(false);

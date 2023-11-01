@@ -1,4 +1,4 @@
-
+/* 
 import {Card, CardHeader, CardBody, CardFooter, Avatar} from "@nextui-org/react";
 import {BiMessageSquareDetail} from "react-icons/bi";
 import { useState, useEffect } from 'react';
@@ -55,3 +55,4 @@ export  function ForoQuestions(data) {
     </div>
   );
 }
+ */

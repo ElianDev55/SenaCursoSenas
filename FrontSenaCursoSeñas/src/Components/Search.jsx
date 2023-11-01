@@ -1,12 +1,24 @@
 import { BiSearchAlt } from "react-icons/bi";
 import {Input} from "@nextui-org/react";
+import { useState } from "react";
+
+import { useContext } from "react";
+import { VideosContext } from '../Context/ContextVideos';
 
 export function Search() {
+
+  
+  const context = useContext(VideosContext);
+
   return (
+
+
+
     <Input
   label="Buscar"
   isClearable
   radius="lg"
+  onChange={(e) => context.SeachVideosData(e.target.value)}
   classNames={{
     label: "text-black/50 dark:text-white/90",
     input: [

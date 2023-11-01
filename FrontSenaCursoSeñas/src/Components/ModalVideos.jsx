@@ -1,4 +1,4 @@
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button} from "@nextui-org/react";
+/* import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button} from "@nextui-org/react";
 import '../Styles/ModalVideos.css'
 import { useContext } from "react";
 import { ContextVideos } from "../Context/ContextVideos";
@@ -100,4 +100,4 @@ const context = useContext(ContextVideos);
       </Modal>
     </>
   );
-}
+} */
