@@ -1,56 +1,36 @@
-/* import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button} from "@nextui-org/react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button} from "@nextui-org/react";
 import '../Styles/ModalVideos.css'
 import { useContext } from "react";
-import { ContextVideos } from "../Context/ContextVideos";
-import { ForoQuestions } from "./Foroquestions";
-import { LayoutForo } from "./LayoutForo";
+import { VideosContext } from "../Context/ContextVideos";
+
+
 
 export function ModalVideos() {
 
+  const contextVideos = useContext(VideosContext);
+  let video = contextVideos.video;
 
-const context = useContext(ContextVideos);
+  
 
-
-
+  let  isOpen = contextVideos.isOpen;
+  let  onClose = contextVideos.onClose;
+  
+  
+  
+  const size = "4xl";
   const backdrops = "blur";
-  const sizes = "5xl";
 
-  context.handleOpen(backdrops,sizes);
+
  
- const items = [
-  {
-
-  },
-  {
-    
-  },
-  {
-    
-  },
-  {
-    
-  },
-  {
-    
-  },
-  {
-    
-  },
- ]
-
   return (
-    <>
-      <div className="flex flex-wrap gap-3">
-       
-        
-      </div>
-      <Modal
-      size={context.size} 
+    
+      <Modal 
+        size={size} 
+        isOpen={isOpen} 
+        onClose={onClose} 
+        backdrops={backdrops}
         className="mx-auto"
         placement="center"
-        backdrop={context.backdrop}
-        isOpen={context.isOpenVideoModal}
-        onClose={() => context.CloseModalVideos()}
         classNames={{
           body: "py-6",
           backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
@@ -59,38 +39,35 @@ const context = useContext(ContextVideos);
           footer: "border-t-[1px] border-[#000000]",
           closeButton: "hover:bg-white/5 active:bg-white/10",
         }}
+        
+        
       >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">{context.infoVideo.title}</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">
+                {video ? (
+                  video.title // Renderiza el valor de video.video si no es nulo
+                  ) : (
+                    "El video está vacío o no disponible" // Muestra un mensaje alternativo si video.video es nulo
+                    )}
+</ModalHeader>
               <ModalBody>
-              {context.render == "videos" ? (
-                <video
-                src={context.infoVideo.video}
-                controls
-                width="100%"
-                height="100%"
-                />
-                ) : (
-                  
-                  <div className="mt-10">
-                    {
-                    items?.map(item => (
-                    <ForoQuestions data={context.infoDiscussion} />
-                    ))
-                    }
+              {video ? (
+                    <video
+                    src={video.video}
+                    controls
+                    width="100%"
+                    height="100%"
+                    />
+                 // Renderiza el valor de video.video si no es nulo
+                  ) : (
+                    "El video está vacío o no disponible" // Muestra un mensaje alternativo si video.video es nulo
+                    )}
 
-
-                    </div>
-                  )}
-                  </ModalBody>
+              </ModalBody>
               <ModalFooter>
-                <Button
-                  color="danger"
-                  variant="light"
-                  onClick={onClose}
-                >
+                <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
               </ModalFooter>
@@ -98,6 +75,6 @@ const context = useContext(ContextVideos);
           )}
         </ModalContent>
       </Modal>
-    </>
+    
   );
-} */
+}

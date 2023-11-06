@@ -4,7 +4,7 @@ import {useFetchCategories,useSendDataCategories,useDeleteCategories,usePutCateg
 export const CategoriesContext = createContext();
 
 
-export const RolesProvider = ({children}) => {
+export const CategoriesProvider = ({children}) => {
     
 
     //Get information from api/hook

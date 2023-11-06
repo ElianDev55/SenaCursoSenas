@@ -51,7 +51,7 @@ const usePutUsers = () => {
     setUpdated(true);
 
     try {
-        await axios.put(`http://127.0.0.1:8000/users/${videoId}`, updatedData);
+        await axios.patch(`http://127.0.0.1:8000/users/${videoId}`, updatedData);
         setUpdated(false);
     } catch (error) {
         setUpdated(false);

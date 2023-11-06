@@ -35,7 +35,6 @@ const useSendDataVideos = () => {
     }
     console.log(data);
   };
-
   return {
     sent,
     handleSubmit,
@@ -50,7 +49,7 @@ const usePutVideos = () => {
     setUpdated(true);
 
     try {
-      await axios.put(`http://127.0.0.1:8000/videos/${videoId}/`, updatedData);
+      await axios.patch(`http://127.0.0.1:8000/videos/${videoId}/`, updatedData);
       console.log(updatedData);
 
       setUpdated(false);
@@ -90,6 +89,31 @@ const useDeleteVideos = () => {
   };
 };
 
+const useVideoById = () => {
+  const [video, setVideo] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchVideoById = async (videoId) => {
+    setLoading(true);
+
+    try {
+      const response = await axios.get(`http://localhost:8000/videos/${videoId}`);
+      setVideo(response.data);
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
+
+  return {
+    video,
+    loading,
+    error,
+    fetchVideoById,
+  };
+};
 
 
 function useSearchVideos(initialSearchTerm = '') {
@@ -123,4 +147,4 @@ function useSearchVideos(initialSearchTerm = '') {
   return { searchTerm, setSearchTerm, searchResults };
 }
 
-export {useFetchVideos,useSendDataVideos,useDeleteVideos,usePutVideos,useSearchVideos};
+export {useFetchVideos,useSendDataVideos,useDeleteVideos,usePutVideos,useSearchVideos,useVideoById};

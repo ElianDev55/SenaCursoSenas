@@ -7,12 +7,15 @@ import { VideosContext } from '../Context/ContextVideos';
 import '../styles/AllVideos.css'
 import { MagicMotion } from 'react-magic-motion';
 import { ModalPostVideo } from '../Components/ComponentCrudVideo/ModalPostVideo';
+import { motion } from 'framer-motion';
+
 
 export const Videos = () => {
     const context = useContext(VideosContext);
     const videos = context.searchResults;
 
     return (
+        
         <div>
             <div className="flex justify-center items-center w-full max-w-500 mx-auto">
                 <div className="dog">
@@ -24,12 +27,19 @@ export const Videos = () => {
             </div>
             <div className="flex justify-center items-center w-full max-w-500 mx-auto">
                 
+                
                 <LayoutCards>
-                    
-                        {videos?.map(video => (
-                            <Cards key={video.idvideo} data={video} />
-                        ))}
-                    
+            
+                        
+                {videos.length > 0 ? (
+                    videos.map((video) => (
+                    <Cards key={video.idvideo} data={video} />
+                    ))
+                    ) : (
+                    <p>No hay videos disponibles.</p>
+                    )}
+
+     
                 </LayoutCards>
             </div>
         </div>

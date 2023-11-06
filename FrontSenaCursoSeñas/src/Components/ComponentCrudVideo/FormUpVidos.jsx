@@ -3,11 +3,12 @@ import { VideosContext } from "../../Context/ContextVideos";
 import {Input,Textarea,Checkbox,Button} from "@nextui-org/react";
 import {IoMdSend} from "react-icons/io";
 import { Spinner } from "@nextui-org/react";
+import { CategoriesContext } from "../../Context/ContextCategories";
 
 export function FormUpVidos() {
     const { sendVideosData, sent } = useContext(VideosContext);
-
-
+      const context = useContext(CategoriesContext)
+      const categories = context.categories;
 
     const [formData, setFormData] = useState({
         video: null,
@@ -27,6 +28,7 @@ export function FormUpVidos() {
         formDataToSend.append(key, formData[key]);
       }
     }
+    console.log(formDataToSend);
     await sendVideosData(formDataToSend);
   };
 
@@ -76,15 +78,21 @@ export function FormUpVidos() {
       />
     </label>
     <label className="block mt-4">
-      <span className="text-sm font-medium text-gray-700">Categoría:</span>
-      <Input
-        type="text"
-        name="idCategory"
-        value={formData.idCategory}
-        onChange={handleInputChange}
-        className="mt-1 block  bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-base"
-      />
-    </label>
+  <span className="text-sm font-medium text-gray-700">Categoría:</span>
+  <select
+    name="idCategory"
+    value={formData.idCategory}
+    onChange={handleInputChange}
+    className="mt-1 block bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-base"
+  >
+    {categories.map((category) => (
+      <option key={category.idcategory} value={category.idcategory}>
+        
+        {category.title}
+      </option>
+    ))}
+  </select>
+</label>
      <label className="block mt-4">
       <span className="text-sm font-medium text-gray-700">Miniatura del Video:</span>
       <input

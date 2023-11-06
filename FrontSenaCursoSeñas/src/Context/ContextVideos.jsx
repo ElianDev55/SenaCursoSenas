@@ -1,5 +1,7 @@
 import { createContext } from "react";
-import {useFetchVideos,useSendDataVideos,useDeleteVideos,usePutVideos,useSearchVideos} from "../Hooks/CrudVideos";
+import {useFetchVideos,useSendDataVideos,useDeleteVideos,usePutVideos,useSearchVideos,useVideoById} from "../Hooks/CrudVideos";
+import {useDisclosure} from "@nextui-org/react";
+import { useState } from "react";
 
 export const VideosContext = createContext();
 
@@ -15,8 +17,9 @@ export const VideosProvider = ({children}) => {
     const { sent, handleSubmit } = useSendDataVideos(); 
 
     const sendVideosData = async (data) => {
+       console.log(data);
         await handleSubmit(data);
-        window.location.reload();
+       
     };
 
 
@@ -24,8 +27,8 @@ export const VideosProvider = ({children}) => {
     const { updated, handleUpdate } = usePutVideos();
     
     const updateVideosData = async (videoId, updatedData) => {
+        console.log(updatedData);
         await handleUpdate(videoId, updatedData);
-        window.location.reload();
     }
 
 
@@ -37,6 +40,18 @@ export const VideosProvider = ({children}) => {
     }
 
 
+    // Seach info api by id
+
+    const { video,loading,error,fetchVideoById,} = useVideoById()
+
+    const fetchVideoData = async (videoId) => {
+        
+        await fetchVideoById(videoId);
+        
+
+    }
+
+
  // Seach info api
     const { searchTerm, setSearchTerm, searchResults } = useSearchVideos('');
     
@@ -44,6 +59,24 @@ export const VideosProvider = ({children}) => {
         await setSearchTerm(searchTerm);
     }
     
+
+
+    //Change State of Modal fo size
+
+
+
+/* 
+    const [backdrop, setBackdrop] = useState('opaque');
+    const [size, setSize] = useState('md') */
+
+    const {isOpen, onOpen, onClose} = useDisclosure();
+    
+    const handleOpen = () => {
+        console.log("hola");
+        onOpen();
+      }
+    
+
 
     return (
         <VideosContext.Provider value={{ 
@@ -66,6 +99,17 @@ export const VideosProvider = ({children}) => {
             searchTerm,
             SeachVideosData,
             searchResults,
+            //-----
+            //Modal
+            isOpen,
+            onClose,
+            handleOpen,
+            //-----
+            //Get by id
+            video,
+            loading,
+            error,
+            fetchVideoData,
             //-----
             }}>
                 {children}

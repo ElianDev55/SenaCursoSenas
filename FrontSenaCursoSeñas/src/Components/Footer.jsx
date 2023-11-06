@@ -8,7 +8,7 @@ export const Footer =  () => {
   return (
    
     
-    <footer className="bg-white pt-32 pb-0 fixed-bottom w-full ">
+    <footer className="bg-white pt-32 mt-40 pb-0 fixed-bottom w-full ">
       
   <div className="   gap-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 justify-content-center">
   <div className="flex flex-col lg:flex-row gap-10 ">
