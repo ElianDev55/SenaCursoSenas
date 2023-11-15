@@ -34,7 +34,7 @@ class Login(ObtainAuthToken):
                 token = Token.objects.create(user=user)
                 return Response({'token': token.key, 'user': user_serializer.data, 'message': "Logged in"}, status=status.HTTP_200_OK)
         else:
-            return Response({'error': 'Wrong email or password.', 'errors': login_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Wrong username or password.', 'errors': login_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 class Logout(APIView):
     def get (self, request, *args, **kwargs):

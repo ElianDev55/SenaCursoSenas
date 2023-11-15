@@ -17,12 +17,20 @@ class UserViewCreate(generics.ListCreateAPIView):
     queryset = UserSerializer.Meta.model.objects.all()
     
     
-    def post(self,request):
+    def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
+
         if serializer.is_valid():
-            serializer.save()
-            return Response({'message':'User creado correctamente'},status=status.HTTP_201_CREATED)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+            # Extraer y encriptar la contraseña antes de guardar el usuario
+            password = serializer.validated_data.get('password')
+            user = serializer.save()
+            user.set_password(password)
+            user.save()
+
+            return Response({'message': 'Usuario creado correctamente'}, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class UserReadUpdateDelete (generics.RetrieveUpdateDestroyAPIView):
