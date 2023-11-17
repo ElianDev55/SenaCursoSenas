@@ -9,6 +9,6 @@ from apps.users.authentication_mixins import Authentication
 
 class VideoViewSet(Authentication,viewsets.ModelViewSet):
     serializer_class = VideoSerializer
-    queryset = VideoSerializer.Meta.model.objects.filter(state=True)
+    queryset = VideoSerializer.Meta.model.objects.all()
     
     

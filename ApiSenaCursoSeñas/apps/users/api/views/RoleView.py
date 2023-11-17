@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 class RoleViewSet(viewsets.ModelViewSet):
     serializer_class = RoleSerializer
-    queryset = RoleSerializer.Meta.model.objects.filter(state=True)
+    queryset = RoleSerializer.Meta.model.objects.all()
 
 class RoleViewCreate(generics.ListCreateAPIView):
     serializer_class = RoleSerializer

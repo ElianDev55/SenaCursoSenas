@@ -10,7 +10,7 @@ from django.conf import settings
 
 class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
-    queryset = CategorySerializer.Meta.model.objects.filter(state=True)
+    queryset = CategorySerializer.Meta.model.objects.all()
 
 
 class CategoryCreate(generics.ListCreateAPIView):

@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view
 @api_view(['GET'])
 def get_videos_by_category(request, category_id):
     try:
-        videos = Video.objects.filter(idCategory=category_id, state=True)
+        videos = Video.objects.all()
         
         # Crear una instancia del serializador pasando la solicitud para obtener URLs completas
         serializer = CategoryVideoSerializer(videos, many=True, context={'request': request})
