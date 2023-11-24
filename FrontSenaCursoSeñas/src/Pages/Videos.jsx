@@ -1,13 +1,12 @@
-import  { useState, useEffect } from 'react';
+//import  { useState, useEffect } from 'react';
 import { Search } from '../Components/Search';
 import { Cards } from '../Components/Cards';
 import { LayoutCards } from '../Components/LayoutCards';
 import { useContext } from 'react';
 import { VideosContext } from '../Context/ContextVideos';
 import '../styles/AllVideos.css'
-import { MagicMotion } from 'react-magic-motion';
 import { ModalPostVideo } from '../Components/ComponentCrudVideo/ModalPostVideo';
-import { motion } from 'framer-motion';
+
 
 
 export const Videos = () => {

@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import {useFetchUsers,useSendDataUsers,useDeleteUsers,usePutUsers,useSearchUsers} from "../Hooks/CrudUsers";
+import {useFetchUsers,useSendDataUsers,useDeleteUsers,usePutUsers,useUserById} from "../Hooks/CrudUsers";
 
 export const UsersContext = createContext();
 
@@ -35,13 +35,17 @@ export const UsersProvider = ({children}) => {
         await handleDelete(videoId);
     }
 
+     // Seach info api by id
+     const {user,loading,error,fetchUserById,} = useUserById()
 
- // Seach info api
-    const { searchTerm, setSearchTerm, searchResults } = useSearchUsers('');
-    
-    const SeachUsersData = async (searchTerm) => {
-        await setSearchTerm(searchTerm);
-    }
+     const fetchUserData = async (userid) => {
+         
+         await fetchUserById(userid);
+         
+ 
+     }
+ 
+
     
 
     return (
@@ -61,11 +65,13 @@ export const UsersProvider = ({children}) => {
             deleteUsersData,
             deleted,
             //-----
-            //Search
-            searchTerm,
-            SeachUsersData,
-            searchResults,
+            //Search by id
+            user,
+            loading,
+            error,
+            fetchUserData,
             //-----
+        
             }}>
                 {children}
         </UsersContext.Provider>

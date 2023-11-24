@@ -27,7 +27,7 @@ const useSendDataUsers = () => {
     setSent(true);
 
     try {
-        await axios.post("http://127.0.0.1:8000/users/", data);
+        await axios.patch("http://127.0.0.1:8000/users/", data);
         setSent(false);
     } catch (error) {
         setSent(false);
@@ -90,6 +90,33 @@ return {
 };
 
 
+const useUserById = () => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchUserById = async (userid) => {
+    setLoading(true);
+
+    try {
+      const response = await axios.get(`http://localhost:8000/users/${userid}`);
+      setUser(response.data);
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
+
+  return {
+    user,
+    loading,
+    error,
+    fetchUserById,
+  };
+};
+
+
 
 function useSearchUsers(initialSearchTerm = '') {
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
@@ -122,4 +149,4 @@ function useSearchUsers(initialSearchTerm = '') {
   return { searchTerm, setSearchTerm, searchResults };
 }
 
-export {useFetchUsers,useSendDataUsers,useDeleteUsers,usePutUsers,useSearchUsers};
+export {useFetchUsers,useSendDataUsers,useDeleteUsers,usePutUsers,useSearchUsers,useUserById};

@@ -36,13 +36,7 @@ export const DiscussionsProvider = ({children}) => {
     }
 
 
- // Seach info api
-    const { searchTerm, setSearchTerm, searchResults } = useSearchDiscussion('');
-    
-    const SeachDiscussionsData = async (searchTerm) => {
-        await setSearchTerm(searchTerm);
-    }
-    
+ 
 
     return (
         <DiscussionsContext.Provider value={{ 
@@ -61,11 +55,7 @@ export const DiscussionsProvider = ({children}) => {
             deleteDiscussionsData,
             deleted,
             //-----
-            //Search
-            searchTerm,
-            SeachDiscussionsData,
-            searchResults,
-            //-----
+       
             }}>
                 {children}
         </DiscussionsContext.Provider>
