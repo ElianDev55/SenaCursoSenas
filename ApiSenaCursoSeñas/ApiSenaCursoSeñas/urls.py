@@ -27,6 +27,8 @@ from django.contrib import admin
 from django.urls import path, include
 from apps.users.view import Login, Logout
 from  apps.videos.api.views.CategoryVideoView import get_videos_by_category
+from  apps.Comment.api.views.ForoCommentsView  import get_comment_by_foro
+
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -53,6 +55,7 @@ urlpatterns = [
     path('', include('apps.CollaborationAnswer.api.routers')),
     
     path('categoryvideos/<int:category_id>/', get_videos_by_category, name='get_videos_by_category'),
+    path('forocomments/<int:foro_id>/', get_comment_by_foro, name='get_comment_by_foro'),
     path('login/', Login.as_view(), name='login'),
     path('logout/', Logout.as_view(), name='logout'),
     

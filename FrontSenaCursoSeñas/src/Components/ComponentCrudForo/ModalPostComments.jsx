@@ -1,8 +1,9 @@
 import React from "react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
-import {FormUpForo} from "./FormUpForo";
+import {FormUpCommet} from "../ComponentCrudForo/FormUpCommet";
+import { CiCirclePlus } from "react-icons/ci";
 
-export function ModalPostForo() {
+export function ModalPostComments(data) {
   const {isOpen, onOpen, onClose} = useDisclosure();
   const [size, setSize] = React.useState('md')
 
@@ -18,11 +19,15 @@ export function ModalPostForo() {
     <>
       <div className="flex flex-wrap gap-3">
         {sizes.map((size) => (
-          <Button className="w-full px-4 sm:px-8 md:px-16 lg:px-32 xl:px-96 font-semibold" color="success" key={size} onPress={() => handleOpen(size)}>
-            Ingresa tu pregunta
+          
+          <Button className="hover:text-blue-600-500 " color="" key={size} onPress={() => handleOpen(size)}>
+            
+          <CiCirclePlus className="text-2xl " />
+
           </Button>
         ))}  
       </div>
+      
       <Modal 
         size={size} 
         isOpen={isOpen} 
@@ -36,7 +41,7 @@ export function ModalPostForo() {
               <ModalHeader className="flex flex-col gap-1"></ModalHeader>
               <ModalBody>
 
-                <FormUpForo/>
+                <FormUpCommet data = {data} />
 
               </ModalBody>
 

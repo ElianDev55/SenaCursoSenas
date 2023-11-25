@@ -1,5 +1,6 @@
 import { createContext } from "react";
-import {useFetchDiscussion,useSendDataDiscussion,useDeleteDiscussion,usePutDiscussion,useSearchDiscussion} from "../Hooks/CrudDiscussions";
+import {useFetchDiscussion,useSendDataDiscussion,useDeleteDiscussion,usePutDiscussion} from "../Hooks/CrudDiscussions";
+import {useDisclosure} from "@nextui-org/react";
 
 export const DiscussionsContext = createContext();
 
@@ -21,7 +22,7 @@ export const DiscussionsProvider = ({children}) => {
 
 
     // Put info api
-    const { updated, handleUpdate } = useDeleteDiscussion();
+    const { updated, handleUpdate } = usePutDiscussion();
     
     const updateDiscussionsData = async (videoId, updatedData) => {
         await handleUpdate(videoId, updatedData);
@@ -29,14 +30,26 @@ export const DiscussionsProvider = ({children}) => {
 
 
     //Delete info api
-    const { deleted, handleDelete } = usePutDiscussion();
+    const { deleted, handleDelete } = useDeleteDiscussion ();
     
     const deleteDiscussionsData = async (videoId) => {
+        console.log(videoId);
         await handleDelete(videoId);
     }
 
 
- 
+       // Seach info api by id
+       
+
+
+
+       const {isOpen, onOpen, onClose} = useDisclosure();
+    
+       const handleOpen = () => {
+           console.log("hola");
+           onOpen();
+         }
+       
 
     return (
         <DiscussionsContext.Provider value={{ 
@@ -55,6 +68,10 @@ export const DiscussionsProvider = ({children}) => {
             deleteDiscussionsData,
             deleted,
             //-----
+            //modal
+            isOpen,
+            handleOpen,
+            onClose,
        
             }}>
                 {children}

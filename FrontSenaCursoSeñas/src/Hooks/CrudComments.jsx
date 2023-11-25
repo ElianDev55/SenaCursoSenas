@@ -65,6 +65,32 @@ return {
 };
 };
 
+const useForoCommentsById = () => {
+  const [comment, setComment] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchCommentById = async (commentid) => {
+    setLoading(true);
+
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/forocomments/${commentid}`);
+      setComment(response.data);
+      console.log(response.data);
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
+
+  return {
+    comment,
+    loading,
+    error,
+    fetchCommentById,
+  };
+};
 
 
 
@@ -91,35 +117,6 @@ return {
 
 
 
-function useSearchComments(initialSearchTerm = '') {
-  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
-  const [allVideos, setAllVideos] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/comment/');
-        setAllVideos(response.data);
-      } catch (error) {
-        console.error('Error al obtener videos:', error);
-      }
-    };
 
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    // Filtra los videos por título localmente
-    const filteredVideos = allVideos.filter((video) =>
-      video.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setSearchResults(filteredVideos);
-  }, [searchTerm, allVideos]);
-
-  
-
-  return { searchTerm, setSearchTerm, searchResults };
-}
-
-export {useFetchComments,useSendDataComments,useDeleteComments,usePutComments,useSearchComments};
+export {useFetchComments,useSendDataComments,useDeleteComments,usePutComments,useForoCommentsById};

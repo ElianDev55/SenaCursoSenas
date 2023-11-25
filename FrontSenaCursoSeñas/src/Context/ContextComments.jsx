@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import {useFetchComments,useSendDataComments,useDeleteComments,usePutComments,useSearchComments} from "../Hooks/CrudComments";
+import {useFetchComments,useSendDataComments,useDeleteComments,usePutComments,useForoCommentsById} from "../Hooks/CrudComments";
 
 export const CommentsContext = createContext();
 
@@ -36,13 +36,17 @@ export const CommentsProvider = ({children}) => {
     }
 
 
- // Seach info api
-    const { searchTerm, setSearchTerm, searchResults } = useSearchComments('');
+        // Seach info api by id
+
+        const {  comment,loading,error,fetchCommentById,} = useForoCommentsById()
+
+        const fetchCommentData = async (videoId) => {
+            
+            await fetchCommentById(videoId);
+            
     
-    const SeachCommentsData = async (searchTerm) => {
-        await setSearchTerm(searchTerm);
-    }
-    
+        }
+
 
     return (
         <CommentsContext.Provider value={{ 
@@ -61,11 +65,11 @@ export const CommentsProvider = ({children}) => {
             deleteCommentsData,
             deleted,
             //-----
-            //Search
-            searchTerm,
-            SeachCommentsData,
-            searchResults,
-            //-----
+            //By id
+            comment,
+            loading,
+            error,
+            fetchCommentData,
             }}>
                 {children}
         </CommentsContext.Provider>

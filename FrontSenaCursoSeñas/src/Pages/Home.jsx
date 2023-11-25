@@ -12,6 +12,7 @@ import {DiscussionsProvider} from '../Context/ContextDiscussions';
 import {UsersProvider} from '../Context/ContextUsers';
 import {RolesProvider} from '../Context/ContextRoles';
 import Foro  from './Foro';
+import { ModalComments } from '../Components/ComponentCrudForo/ModalComments';
 
 
 
@@ -21,9 +22,14 @@ const Home = () => {
         <VideosProvider>
             <CategoriesProvider>
                 <DiscussionsProvider>
-
+                    <CommentsProvider>
+                    
+                    <ModalComments/>
+                    <ModalComments/>
                     <Foro/>
                 <Footer/>
+
+                    </CommentsProvider>
 
                 </DiscussionsProvider>
             </CategoriesProvider>
