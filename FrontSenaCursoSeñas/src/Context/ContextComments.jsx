@@ -21,7 +21,7 @@ export const CommentsProvider = ({children}) => {
 
 
     // Put info api
-    const { updated, handleUpdate } = useDeleteComments();
+    const { updated, handleUpdate } = usePutComments();
     
     const updateCommentsData = async (videoId, updatedData) => {
         await handleUpdate(videoId, updatedData);
@@ -29,7 +29,7 @@ export const CommentsProvider = ({children}) => {
 
 
     //Delete info api
-    const { deleted, handleDelete } = usePutComments();
+    const { deleted, handleDelete } = useDeleteComments(); 
     
     const deleteCommentsData = async (videoId) => {
         await handleDelete(videoId);

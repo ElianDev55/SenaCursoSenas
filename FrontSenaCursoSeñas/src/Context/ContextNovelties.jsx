@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import {useFetchNovelties,useSendDataNovelties,useDeleteNovelties,usePutNovelties,useSearchNovelties} from "../Hooks/CrudNovelties";
+import {useFetchNovelties,useSendDataNovelties,useDeleteNovelties,usePutNovelties} from "../Hooks/CrudNovelties";
 
 export const NoveltiesContext = createContext();
 
@@ -36,12 +36,6 @@ export const NolveltiesProvider = ({children}) => {
     }
 
 
- // Seach info api
-    const { searchTerm, setSearchTerm, searchResults } = useSearchNovelties('');
-    
-    const SeachNoveltiesData = async (searchTerm) => {
-        await setSearchTerm(searchTerm);
-    }
     
 
     return (
@@ -60,11 +54,6 @@ export const NolveltiesProvider = ({children}) => {
             //Delete
             deleteNoveltiesData,
             deleted,
-            //-----
-            //Search
-            searchTerm,
-            SeachNoveltiesData,
-            searchResults,
             //-----
             }}>
                 {children}

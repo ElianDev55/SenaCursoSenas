@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import NotificationButton from '../Components/NotificationPanel'
 import { CategoriesProvider } from '../Context/ContextCategories';
 import Menu from '../Components/Categorias';
+import { NolveltiesProvider } from "../Context/ContextNovelties";
 
 export default function NavB() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -69,7 +70,9 @@ export default function NavB() {
 
       <NavbarContent justify="end">
         <NavbarItem>
+          <NolveltiesProvider>
           <NotificationButton/>
+          </NolveltiesProvider>
         </NavbarItem>
         <NavbarItem>
           <UserMenu />

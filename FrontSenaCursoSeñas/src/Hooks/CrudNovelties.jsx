@@ -91,35 +91,5 @@ return {
 
 
 
-function useSearchNovelties(initialSearchTerm = '') {
-  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
-  const [allVideos, setAllVideos] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/novelties/');
-        setAllVideos(response.data);
-      } catch (error) {
-        console.error('Error al obtener videos:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    // Filtra los videos por título localmente
-    const filteredVideos = allVideos.filter((video) =>
-      video.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setSearchResults(filteredVideos);
-  }, [searchTerm, allVideos]);
-
-  
-
-  return { searchTerm, setSearchTerm, searchResults };
-}
-
-export {useFetchNovelties,useSendDataNovelties,useDeleteNovelties,usePutNovelties,useSearchNovelties};
+export {useFetchNovelties,useSendDataNovelties,useDeleteNovelties,usePutNovelties};

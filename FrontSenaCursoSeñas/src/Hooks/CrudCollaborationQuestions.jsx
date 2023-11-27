@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { colors } from "@nextui-org/react";
 
 const useFetchCollaborationQuestions = (url) => {
     const [collaborationQuestions, setCollaborationQuestions ] = useState([]);
@@ -8,12 +9,14 @@ const useFetchCollaborationQuestions = (url) => {
     useEffect(() => {
     let list = []
     axios.get(url).then((response) => {
+        
         setCollaborationQuestions (response.data);
         list.push(response.data);
         setCollaborationQuestions (list);
+        
     });
+    
 }, [url]);
-
 
 return collaborationQuestions;
 
@@ -91,35 +94,5 @@ return {
 
 
 
-function useSearchCollaborationQuestions(initialSearchTerm = '') {
-  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
-  const [allVideos, setAllVideos] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/CollaborationQuestions/');
-        setAllVideos(response.data);
-      } catch (error) {
-        console.error('Error al obtener videos:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    // Filtra los videos por título localmente
-    const filteredVideos = allVideos.filter((video) =>
-      video.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setSearchResults(filteredVideos);
-  }, [searchTerm, allVideos]);
-
-  
-
-  return { searchTerm, setSearchTerm, searchResults };
-}
-
-export {useFetchCollaborationQuestions,useSendCollaborationQuestions,useDeleteCollaborationQuestions,usePutCollaborationQuestions,useSearchCollaborationQuestions};
+export {useFetchCollaborationQuestions,useSendCollaborationQuestions,useDeleteCollaborationQuestions,usePutCollaborationQuestions};
