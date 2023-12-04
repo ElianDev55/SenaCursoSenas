@@ -12,6 +12,7 @@ import { Perfil } from './Perfil';
 
 
 const AppRoutes = () => {
+  
   let routes = useRoutes([
     { path: '/foro', element: <Foro /> },
     { path: '/colaboracion', element: <Colaboracion /> },

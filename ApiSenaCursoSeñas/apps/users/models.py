@@ -41,6 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     disability = models.BooleanField()
     mail = models.EmailField(unique=True)  # Cambiado a unique=True
     telephone_number = models.CharField(max_length=15)
+    inforpersonal = models.TextField(max_length=500, blank=True, null=True)
     state = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

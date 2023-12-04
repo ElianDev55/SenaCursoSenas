@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardHeader, CardBody } from "@nextui-org/react";
 import { Select, SelectItem } from "@nextui-org/react";
+import { MdOutlineSendAndArchive } from "react-icons/md";
+import { Button } from "@nextui-org/react";
+import { Tooltip } from "@nextui-org/react";
+
 
 export const CardColla = ({ id, title }) => {
   const size = "sm";
@@ -93,6 +97,11 @@ export const CardColla = ({ id, title }) => {
                         ★
                       </span>
                     ))}
+                   <Tooltip title="Enviar estrellas" arrow>
+      <Button color="">
+        <MdOutlineSendAndArchive className="text-lg hover:text-green-500" />
+      </Button>
+    </Tooltip>
                   </div>
                   <p>Total de estrellas seleccionadas: {totalRating} </p>
                 </>
