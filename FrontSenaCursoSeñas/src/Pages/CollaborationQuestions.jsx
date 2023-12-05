@@ -1,5 +1,4 @@
-// CollaborationQuestions.jsx
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext, useMemo } from "react";
 import { Button } from "@nextui-org/react";
 import { CardColla } from "../Components/ComponentCrudCollaborationQuestions/CardColla";
 import { CollaborationQuestionsContext } from "../Context/ContextCollaborationQuestions";
@@ -11,8 +10,9 @@ export function CollaborationQuestions() {
   const data = context.collaborationQuestions || [];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [starData, setStarData] = useState([]);
+  const totalQuestions = 5;
 
-  const apiData = React.useMemo(() => {
+  const apiData = useMemo(() => {
     return [
       { id: 1, title: data[0]?.QuestionOne },
       { id: 2, title: data[0]?.QuestionTwo },
@@ -20,13 +20,13 @@ export function CollaborationQuestions() {
       { id: 4, title: data[0]?.QuestionFour },
       { id: 5, title: data[0]?.QuestionFive },
     ];
-  }, [data, currentIndex]);
+  }, [data]);
 
   const currentCard = apiData[currentIndex];
   const [totalRating, setTotalRating] = useState(0);
 
   const handleNextCard = () => {
-    if (currentIndex + 1 < apiData.length) {
+    if (currentIndex + 1 < totalQuestions) {
       setCurrentIndex((prevIndex) => prevIndex + 1);
     } else {
       console.log("Ya has respondido todas las preguntas.");
@@ -46,6 +46,14 @@ export function CollaborationQuestions() {
 
   const handleSubirRespuestas = () => {
     console.log("Datos de estrellas guardados:", starData);
+
+    // Obtener la última entrada en starData
+    const ultimaEntrada = starData[starData.length - 1];
+
+    // Guardar los datos en una variable adicional si es necesario
+    const datosUltimaEstrella = ultimaEntrada ? { id: ultimaEntrada.id, stars: ultimaEntrada.stars } : null;
+
+    console.log("Datos de la última estrella:", datosUltimaEstrella);
   };
 
   return (
@@ -53,14 +61,14 @@ export function CollaborationQuestions() {
       <div className="md:w-1/2 md:pl-4 flex flex-col items-center md:items-end">
         <CardColla
           {...currentCard}
-          apiData={apiData}  // Agregado para pasar apiData como prop
+          apiData={apiData}
+          totalQuestions={totalQuestions} 
           onSave={(params) => {
             handleSaveResponse(params);
-            // Reiniciar el estado de las estrellas después de guardar
             setTotalRating(0);
           }}
           onVideoChange={handleVideoChange}
-          showSubmitButton={!apiData[currentIndex + 1]}
+          showSubmitButton={currentIndex + 1 === totalQuestions}
           onSubmitButtonClick={handleSubirRespuestas}
           totalRating={totalRating}
           setTotalRating={setTotalRating}
