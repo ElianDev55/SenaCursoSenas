@@ -3,9 +3,11 @@ import { Button } from "@nextui-org/react";
 import { CardColla } from "../Components/ComponentCrudCollaborationQuestions/CardColla";
 import { CollaborationQuestionsContext } from "../Context/ContextCollaborationQuestions";
 import { GrLinkNext } from "react-icons/gr";
+import axios from "axios";
 import 'animate.css';
 
-export function CollaborationQuestions() {
+export const CollaborationQuestions = () => {
+  const [idVideoSeleccionado, setIdVideoSeleccionado] = useState(null);
   const context = useContext(CollaborationQuestionsContext);
   const data = context.collaborationQuestions || [];
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -33,10 +35,10 @@ export function CollaborationQuestions() {
     }
   };
 
-  const handleSaveResponse = ({ id, stars }) => {
+  const handleSaveResponse = ({ id, estrellas }) => {
     setStarData((prevStarData) => [
       ...prevStarData,
-      { id, stars }
+      { id, estrellas }
     ]);
   };
 
@@ -44,16 +46,37 @@ export function CollaborationQuestions() {
     setStarData([]);
   };
 
-  const handleSubirRespuestas = () => {
-    console.log("Datos de estrellas guardados:", starData);
+  const handleSubirRespuestas = async ({ respuestas }) => {
+    console.log("Respuestas guardadas:", respuestas);
 
-    // Obtener la última entrada en starData
-    const ultimaEntrada = starData[starData.length - 1];
+    const idVideoSeleccionado = obtenerIdVideoSeleccionado();
+    const idVideo = idVideoSeleccionado.replace(/^.*[\\/]/, '').replace(/\.[^/.]+$/, '');
 
-    // Guardar los datos en una variable adicional si es necesario
-    const datosUltimaEstrella = ultimaEntrada ? { id: ultimaEntrada.id, stars: ultimaEntrada.stars } : null;
+    // Crear el objeto de respuestas con la estructura esperada por la API
+    const answersPayload = {
+      QuestionOne: (respuestas.find(item => item.id === 1)?.estrellas || 0).toString(),
+      QuestionTwo: (respuestas.find(item => item.id === 2)?.estrellas || 0).toString(),
+      QuestionThree: (respuestas.find(item => item.id === 3)?.estrellas || 0).toString(),
+      QuestionFour: (respuestas.find(item => item.id === 4)?.estrellas || 0).toString(),
+      QuestionFive: (respuestas.find(item => item.id === 5)?.estrellas || 0).toString(),
+      State: true,
+      IdVideo: 1,
+      IdUser: "1104936885",
+    };
 
-    console.log("Datos de la última estrella:", datosUltimaEstrella);
+    try {
+      // Enviar los datos a la API
+      const response = await axios.post("http://localhost:8000/CollaborationAnswer/", answersPayload);
+      console.log("Respuestas enviadas con éxito:", response.data);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error al enviar respuestas:", error);
+      console.log("Respuestas enviadas:", answersPayload);
+    }
+  };
+
+  const obtenerIdVideoSeleccionado = () => {
+    return idVideoSeleccionado;
   };
 
   return (
@@ -69,9 +92,11 @@ export function CollaborationQuestions() {
           }}
           onVideoChange={handleVideoChange}
           showSubmitButton={currentIndex + 1 === totalQuestions}
-          onSubmitButtonClick={handleSubirRespuestas}
+          onSubmitButtonClick={() => handleSubirRespuestas({ respuestas: starData })}
           totalRating={totalRating}
           setTotalRating={setTotalRating}
+          idVideoSeleccionado={idVideoSeleccionado}
+          setIdVideoSeleccionado={setIdVideoSeleccionado} // Pasa la función de actualización
         />
       </div>
       <div className="mt-4 md:mt-0 md:pl-4 flex justify-center md:justify-end">
@@ -81,4 +106,6 @@ export function CollaborationQuestions() {
       </div>
     </div>
   );
-}
+};
+
+

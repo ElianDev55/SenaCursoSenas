@@ -27,12 +27,15 @@ const Home = () => {
             <CategoriesProvider>
                 <DiscussionsProvider>
                     <CommentsProvider>
-                        
                         <CollaborationQuestionsProvider>
-                        
+                        <CollaborationAnswersProvider>
+
+
                         <CollaborationQuestions/>
                         <Footer/>
 
+                        
+                        </CollaborationAnswersProvider>
                         </CollaborationQuestionsProvider>
                         
                     

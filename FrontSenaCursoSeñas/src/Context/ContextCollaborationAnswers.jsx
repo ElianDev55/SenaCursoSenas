@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import {useFetchCollaborationAnswer,useSendCollaborationAnswer,useDeleteCollaborationAnswer,usePutCollaborationAnswer,useSearchCollaborationAnswer} from "../Hooks/CrudCollaborationAnswers";
+import {useFetchCollaborationAnswer,useSendCollaborationAnswer,useDeleteCollaborationAnswer,usePutCollaborationAnswer} from "../Hooks/CrudCollaborationAnswers";
 
 export const CollaborationAnswersContext = createContext();
 
@@ -8,7 +8,7 @@ export const CollaborationAnswersProvider = ({children}) => {
     
 
     //Get information from api/hook
-    const [collaborationAnswer] = useFetchCollaborationAnswer("http://127.0.0.1:8000/collaborationAnswer/");
+    const [collaborationAnswer] = useFetchCollaborationAnswer("http://localhost:8000/CollaborationAnswer/");
     
     
     //Post info api
@@ -36,12 +36,7 @@ export const CollaborationAnswersProvider = ({children}) => {
     }
 
 
- // Seach info api
-    const { searchTerm, setSearchTerm, searchResults } =useSearchCollaborationAnswer('');
-    
-    const SeachCollaborationAnswersData = async (searchTerm) => {
-        await setSearchTerm(searchTerm);
-    }
+ 
     
 
     return (
@@ -62,9 +57,7 @@ export const CollaborationAnswersProvider = ({children}) => {
             deleted,
             //-----
             //Search
-            searchTerm,
-            SeachCollaborationAnswersData,
-            searchResults,
+         
             //-----
             }}>
                 {children}

@@ -3,15 +3,28 @@ import { Card, CardHeader, CardBody } from "@nextui-org/react";
 import { Select, SelectItem } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { MdOutlineSendAndArchive } from "react-icons/md";
+import axios from "axios";
 
 export const CardColla = (props) => {
-  const { id, title, onSave, onVideoChange, showSubmitButton, onSubmitButtonClick, totalRating, setTotalRating, currentIndex, totalQuestions } = props;
-  const size = "sm";
+  const {
+    id,
+    title,
+    onSave,
+    onVideoChange,
+    showSubmitButton,
+    onSubmitButtonClick,
+    currentIndex,
+    totalQuestions,
+    idVideoSeleccionado,
+    setIdVideoSeleccionado,
+  } = props;
+
   const [selectedVideoUrl, setSelectedVideoUrl] = useState(null);
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [responseSubmitted, setResponseSubmitted] = useState(false);
-  const [datosUltimaEstrella, setDatosUltimaEstrella] = useState(null);
+  const [totalRating, setTotalRating] = useState(0);
+  const [respuestas, setRespuestas] = useState({});
 
   const handleRating = (value) => {
     setTotalRating(value);
@@ -19,17 +32,30 @@ export const CardColla = (props) => {
 
   const handleSave = () => {
     if (selectedVideoUrl && totalRating > 0) {
-      onSave({ id, stars: totalRating });
+      const respuesta = {
+        id: id,
+        pregunta: title,
+        estrellas: totalRating,
+      };
+
+      onSave(respuesta);
       setTotalRating(0);
       setResponseSubmitted(true);
+
+      setRespuestas((prevRespuestas) => ({
+        ...prevRespuestas,
+        [id]: totalRating,
+      }));
+
+      console.log("Respuestas guardadas:", { ...respuestas, [id]: totalRating });
     }
 
-    if (onSubmitButtonClick && currentIndex + 1 === totalQuestions) {
-      onSubmitButtonClick();
+    if (onSubmitButtonClick && currentIndex + 1 === totalQuestions && currentIndex === totalQuestions - 1) {
+      onSubmitButtonClick({ respuestas });
     }
   };
 
-  const handleVideoSelection = (event) => {
+  const handleVideoSelection = async (event) => {
     if (responseSubmitted) {
       console.log("Ya se ha enviado una respuesta. No se puede seleccionar otro video.");
       return;
@@ -37,39 +63,37 @@ export const CardColla = (props) => {
 
     const videoUrl = event.target.value;
 
+    // Aquí actualizamos el estado con el IdVideo seleccionado
+    setIdVideoSeleccionado(videoUrl);
+
     onVideoChange();
 
-    fetch(videoUrl)
-      .then((response) => response.text())
-      .then((data) => {
-        console.log(data);
-        setSelectedVideoUrl(videoUrl);
-      })
-      .catch((error) => {
-        console.error("Error fetching selected video:", error);
-      });
+    try {
+      const response = await fetch(videoUrl);
+      const data = await response.text();
+      console.log(data);
+      setSelectedVideoUrl(videoUrl);
+    } catch (error) {
+      console.error("Error fetching selected video:", error);
+    }
   };
 
   useEffect(() => {
-    fetch("http://localhost:8000/videos/")
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchVideos = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/videos/");
+        const data = await response.json();
         const testVideos = data.filter((video) => video.test === true);
         setVideos(testVideos);
         setLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching videos:", error);
         setLoading(false);
-      });
-  }, []);
+      }
+    };
 
-  useEffect(() => {
-    if (showSubmitButton && currentIndex + 1 === totalQuestions && currentIndex === totalQuestions - 1) {
-      // Si es la última pregunta y se debe mostrar el botón "Subir respuestas"
-      setDatosUltimaEstrella({ id, stars: totalRating });
-    }
-  }, [showSubmitButton, currentIndex, totalQuestions, id, totalRating]);
+    fetchVideos();
+  }, []);
 
   return (
     <Card className="py-4">
@@ -77,10 +101,8 @@ export const CardColla = (props) => {
         <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
           <h4 className="font-bold text-2xl">Formulario de colaboracion</h4>
           <Select
-            size={size}
             label="Elije el video para calificar"
             placeholder="Selecciona un video"
-            className="max-w-xs mt-3"
             onChange={handleVideoSelection}
             value={selectedVideoUrl}
           >
@@ -118,30 +140,34 @@ export const CardColla = (props) => {
                         ★
                       </span>
                     ))}
-                    <Button color="" onClick={handleSave}>
+                    <Button
+                      color={currentIndex + 1 === totalQuestions ? "success" : "gray"}
+                      onClick={handleSave}
+                    >
                       <MdOutlineSendAndArchive className="text-lg hover:text-green-500" />
                     </Button>
                   </div>
                   <p>Total de estrellas seleccionadas: {totalRating} </p>
-                  {(showSubmitButton && currentIndex + 1 === totalQuestions && currentIndex === totalQuestions - 1) && (
-                    <div className="flex justify-center mt-4">
-                      <Button color="success" onClick={() => onSubmitButtonClick(datosUltimaEstrella)}>
-                        Subir respuestas
-                      </Button>
-                    </div>
-                  )}
                 </>
               ) : (
                 <img
                   src="src/Assets/avisocolaboracion.png"
                   alt="Imagen predeterminada"
-                  className="w-full  mt-4"
+                  className="w-full mt-4"
                 />
               )}
             </>
           )}
+          <Button
+            color="success"
+            className="mt-4"
+            onClick={() => onSubmitButtonClick({ respuestas })}
+          >
+            Enviar Respuestas
+          </Button>
         </CardBody>
       </div>
     </Card>
   );
 };
+
