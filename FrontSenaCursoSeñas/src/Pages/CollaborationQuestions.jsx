@@ -1,12 +1,19 @@
-import React, { useState, useContext, useMemo } from "react";
+// CollaborationQuestions.jsx
+import React, { useState, useContext, useMemo, useEffect } from "react";
 import { Button } from "@nextui-org/react";
 import { CardColla } from "../Components/ComponentCrudCollaborationQuestions/CardColla";
 import { CollaborationQuestionsContext } from "../Context/ContextCollaborationQuestions";
 import { GrLinkNext } from "react-icons/gr";
 import axios from "axios";
 import 'animate.css';
+import { VideosContext } from "../Context/ContextVideos";
 
 export const CollaborationQuestions = () => {
+  const video = useContext(VideosContext)
+  const videos = video.videos
+
+  console.log(videos)
+
   const [idVideoSeleccionado, setIdVideoSeleccionado] = useState(null);
   const context = useContext(CollaborationQuestionsContext);
   const data = context.collaborationQuestions || [];
@@ -49,35 +56,54 @@ export const CollaborationQuestions = () => {
   const handleSubirRespuestas = async ({ respuestas }) => {
     console.log("Respuestas guardadas:", respuestas);
 
-    const idVideoSeleccionado = obtenerIdVideoSeleccionado();
-    const idVideo = idVideoSeleccionado.replace(/^.*[\\/]/, '').replace(/\.[^/.]+$/, '');
+    const selectedVideo = videos.find((video) => video.video === idVideoSeleccionado);
 
-    // Crear el objeto de respuestas con la estructura esperada por la API
-    const answersPayload = {
-      QuestionOne: (respuestas.find(item => item.id === 1)?.estrellas || 0).toString(),
-      QuestionTwo: (respuestas.find(item => item.id === 2)?.estrellas || 0).toString(),
-      QuestionThree: (respuestas.find(item => item.id === 3)?.estrellas || 0).toString(),
-      QuestionFour: (respuestas.find(item => item.id === 4)?.estrellas || 0).toString(),
-      QuestionFive: (respuestas.find(item => item.id === 5)?.estrellas || 0).toString(),
-      State: true,
-      IdVideo: 1,
-      IdUser: "1104936885",
-    };
+    console.log("URL seleccionada:", idVideoSeleccionado);
+    console.log("Videos disponibles:", videos);
+  
 
-    try {
-      // Enviar los datos a la API
-      const response = await axios.post("http://localhost:8000/CollaborationAnswer/", answersPayload);
-      console.log("Respuestas enviadas con éxito:", response.data);
-      window.location.reload();
-    } catch (error) {
-      console.error("Error al enviar respuestas:", error);
-      console.log("Respuestas enviadas:", answersPayload);
+    if (selectedVideo) {
+      const idVideo = selectedVideo.id;
+
+      const answersPayload = {
+        QuestionOne: (respuestas.find(item => item.id === 1)?.estrellas || 0).toString(),
+        QuestionTwo: (respuestas.find(item => item.id === 2)?.estrellas || 0).toString(),
+        QuestionThree: (respuestas.find(item => item.id === 3)?.estrellas || 0).toString(),
+        QuestionFour: (respuestas.find(item => item.id === 4)?.estrellas || 0).toString(),
+        QuestionFive: (respuestas.find(item => item.id === 5)?.estrellas || 0).toString(),
+        State: true,
+        IdVideo: idVideo,
+        IdUser: "1104936885",
+      };
+
+      try {
+        const response = await axios.post("http://localhost:8000/CollaborationAnswer/", answersPayload);
+        console.log("Respuestas enviadas con éxito:", response.data);
+        console.log("Respuestas enviadas:", answersPayload);
+
+        // Recargar la página después de enviar las respuestas
+        window.location.reload();
+      } catch (error) {
+        console.error("Error al enviar respuestas:", error);
+        console.log("Respuestas enviadas:", answersPayload);
+      }
+    } else {
+      console.error("No se encontró el video correspondiente a la URL seleccionada.");
     }
+  };
+
+  const getIdFromVideoUrl = (videoUrl) => {
+    const idMatch = videoUrl.match(/\/([^/]+)\.mp4$/);
+    return idMatch ? idMatch[1] : null;
   };
 
   const obtenerIdVideoSeleccionado = () => {
     return idVideoSeleccionado;
   };
+
+  useEffect(() => {
+    // Aquí puedes realizar alguna lógica adicional si es necesario
+  }, []);
 
   return (
     <div className="flex flex-col md:flex-row mt-4 justify-center items-center">
@@ -96,7 +122,7 @@ export const CollaborationQuestions = () => {
           totalRating={totalRating}
           setTotalRating={setTotalRating}
           idVideoSeleccionado={idVideoSeleccionado}
-          setIdVideoSeleccionado={setIdVideoSeleccionado} // Pasa la función de actualización
+          setIdVideoSeleccionado={setIdVideoSeleccionado}
         />
       </div>
       <div className="mt-4 md:mt-0 md:pl-4 flex justify-center md:justify-end">
@@ -107,5 +133,3 @@ export const CollaborationQuestions = () => {
     </div>
   );
 };
-
-

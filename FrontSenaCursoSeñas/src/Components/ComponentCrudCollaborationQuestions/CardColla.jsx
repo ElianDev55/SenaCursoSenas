@@ -17,6 +17,7 @@ export const CardColla = (props) => {
     totalQuestions,
     idVideoSeleccionado,
     setIdVideoSeleccionado,
+    obtenerIdVideoSeleccionado,
   } = props;
 
   const [selectedVideoUrl, setSelectedVideoUrl] = useState(null);
@@ -51,7 +52,7 @@ export const CardColla = (props) => {
     }
 
     if (onSubmitButtonClick && currentIndex + 1 === totalQuestions && currentIndex === totalQuestions - 1) {
-      onSubmitButtonClick({ respuestas });
+      onSubmitButtonClick({ respuestas, obtenerIdVideoSeleccionado });
     }
   };
 
@@ -161,7 +162,7 @@ export const CardColla = (props) => {
           <Button
             color="success"
             className="mt-4"
-            onClick={() => onSubmitButtonClick({ respuestas })}
+            onClick={() => onSubmitButtonClick({ respuestas, obtenerIdVideoSeleccionado })}
           >
             Enviar Respuestas
           </Button>
@@ -170,4 +171,5 @@ export const CardColla = (props) => {
     </Card>
   );
 };
+
 
