@@ -53,17 +53,35 @@ export const CollaborationQuestions = () => {
     setStarData([]);
   };
 
+  console.log("Respuestas guardadas:", idVideoSeleccionado);
+
   const handleSubirRespuestas = async ({ respuestas }) => {
     console.log("Respuestas guardadas:", respuestas);
 
-    const selectedVideo = videos.find((video) => video.video === idVideoSeleccionado);
+    const normalizedSelectedUrl = idVideoSeleccionado
+      ? idVideoSeleccionado.trim().toLowerCase()
+      : '';
+
+      const selectedVideo = normalizedSelectedUrl
+      ? videos.find((video) => {
+          const normalizedVideoUrl = video.video.trim().toLowerCase();
+          console.log("Comparando con video FUCK:", normalizedVideoUrl);
+    
+          // Obtener el nombre del archivo desde la URL
+          const selectedVideoFileName = getIdFromVideoUrl(normalizedSelectedUrl);
+          const normalizedVideoFileName = getIdFromVideoUrl(normalizedVideoUrl);
+    
+          return selectedVideoFileName === normalizedVideoFileName;
+        })
+      : undefined;
 
     console.log("URL seleccionada:", idVideoSeleccionado);
-    console.log("Videos disponibles:", videos);
-  
+    console.log("Video seleccionado:", selectedVideo);
 
     if (selectedVideo) {
-      const idVideo = selectedVideo.id;
+      console.log("Videos disponibles:", selectedVideo.idvideo);
+
+      const idVideo = selectedVideo.idvideo;
 
       const answersPayload = {
         QuestionOne: (respuestas.find(item => item.id === 1)?.estrellas || 0).toString(),
@@ -75,7 +93,6 @@ export const CollaborationQuestions = () => {
         IdVideo: idVideo,
         IdUser: "1104936885",
       };
-
       try {
         const response = await axios.post("http://localhost:8000/CollaborationAnswer/", answersPayload);
         console.log("Respuestas enviadas con éxito:", response.data);
@@ -111,7 +128,7 @@ export const CollaborationQuestions = () => {
         <CardColla
           {...currentCard}
           apiData={apiData}
-          totalQuestions={totalQuestions} 
+          totalQuestions={totalQuestions}
           onSave={(params) => {
             handleSaveResponse(params);
             setTotalRating(0);

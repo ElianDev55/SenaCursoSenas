@@ -20,6 +20,8 @@ export const CardColla = (props) => {
     obtenerIdVideoSeleccionado,
   } = props;
 
+  
+
   const [selectedVideoUrl, setSelectedVideoUrl] = useState(null);
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
