@@ -15,6 +15,7 @@ import Foro  from './Foro';
 import { ModalComments } from '../Components/ComponentCrudForo/ModalComments';
 import { CollaborationQuestions } from './CollaborationQuestions';
 import {CollaborationQuestionsProvider} from '../Context/ContextCollaborationQuestions';
+import { ReportOfVideos } from './ReportOfVideos';
 
 
 const Home = () => {
@@ -31,7 +32,7 @@ const Home = () => {
                         <CollaborationAnswersProvider>
 
 
-                        <CollaborationQuestions/>
+                        <ReportOfVideos/>
                         <Footer/>
 
                         
