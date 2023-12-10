@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Image } from '@nextui-org/react';
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@nextui-org/react";
+import { ModalNovelies } from './ModalNovelies';
 
 const UserMenu = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -38,7 +39,7 @@ const UserMenu = () => {
       <DropdownMenu aria-label="Static Actions">
       <DropdownItem onClick={handleClickPerfil}>Mi perfil</DropdownItem>
         {windowWidth <= 1022 && <DropdownItem key="notifications">Notificaciones</DropdownItem>}
-        <DropdownItem key="copy">Carga de video</DropdownItem>
+        <DropdownItem key="copy"><ModalNovelies></ModalNovelies></DropdownItem>
         <DropdownItem key="edit">Administrador</DropdownItem>
         <DropdownItem key="delete" className="text-danger" color="danger">
           Cerrar sesion
